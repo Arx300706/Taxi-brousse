@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bus SIG Antananarivo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">
+            <p class="eyebrow">SIG Transport urbain</p>
+            <h1>Bus Antananarivo</h1>
+        </div>
+
+        <div class="toolbar">
+            <input id="searchInput" type="search" placeholder="Rechercher ligne, quartier, arrêt">
+            <button id="locateBtn" type="button" title="Me localiser">⌖</button>
+        </div>
+
+        <section class="stats" id="stats"></section>
+        <section class="suggestions" id="suggestions"></section>
+        <section class="route-list" id="routeList"></section>
+    </aside>
+
+    <section class="map-panel">
+        <div id="map"></div>
+        <div class="legend" id="legend"></div>
+    </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
