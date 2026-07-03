@@ -1,6 +1,7 @@
 package mg.bus.sig.repository;
 
 import mg.bus.sig.dto.ArretBusDto;
+import mg.bus.sig.dto.ArretProcheDto;
 import mg.bus.sig.dto.BusPositionDto;
 import mg.bus.sig.dto.LigneBusDto;
 import mg.bus.sig.dto.SuggestionDto;
@@ -52,6 +53,27 @@ public class BusRepository {
                 rs.getString("quartier"),
                 rs.getString("geojson")
         ));
+    }
+
+    public ArretProcheDto findNearestArret(double longitude, double latitude) {
+        String sql = """
+                WITH utilisateur AS (
+                    SELECT ST_SetSRID(ST_MakePoint(?, ?), 4326)::geography AS geom
+                )
+                SELECT a.id, a.nom, a.quartier,
+                       ROUND(ST_Distance(a.geom::geography, u.geom)::numeric, 0) AS distance_m,
+                       ST_AsGeoJSON(a.geom) AS geojson
+                FROM arret_bus a, utilisateur u
+                ORDER BY a.geom::geography <-> u.geom
+                LIMIT 1
+                """;
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> new ArretProcheDto(
+                rs.getInt("id"),
+                rs.getString("nom"),
+                rs.getString("quartier"),
+                rs.getDouble("distance_m"),
+                rs.getString("geojson")
+        ), longitude, latitude);
     }
 
     public List<BusPositionDto> findAllBusPositions() {

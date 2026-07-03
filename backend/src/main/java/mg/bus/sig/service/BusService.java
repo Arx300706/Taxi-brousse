@@ -1,6 +1,7 @@
 package mg.bus.sig.service;
 
 import mg.bus.sig.dto.ArretBusDto;
+import mg.bus.sig.dto.ArretProcheDto;
 import mg.bus.sig.dto.BusPositionDto;
 import mg.bus.sig.dto.LigneBusDto;
 import mg.bus.sig.dto.SuggestionDto;
@@ -23,6 +24,10 @@ public class BusService {
 
     public List<ArretBusDto> getArrets() {
         return busRepository.findAllArrets();
+    }
+
+    public ArretProcheDto getArretProche(double longitude, double latitude) {
+        return busRepository.findNearestArret(longitude, latitude);
     }
 
     public List<BusPositionDto> getBusPositions() {
